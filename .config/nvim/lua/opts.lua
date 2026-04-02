@@ -18,6 +18,17 @@ set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]]
 
+-- Handle workspace/diagnostic/refresh from servers using pull diagnostics (LSP 3.17+).
+-- Nvim 0.11 enables pull diagnostics automatically but has no built-in handler for this
+-- server-to-client request, so without it rust-analyzer's refresh signals are silently dropped.
+vim.lsp.handlers["workspace/diagnostic/refresh"] = function(err, _, ctx)
+  if err then return vim.NIL end
+  for _, bufnr in ipairs(vim.lsp.get_buffers_by_client_id(ctx.client_id)) do
+    vim.lsp.util._refresh("textDocument/diagnostic", { bufnr = bufnr, client_id = ctx.client_id })
+  end
+  return vim.NIL
+end
+
 -- setup bazel/starlark lsp
 if vim.fn.executable "bzl" == 1 then
   vim.lsp.start {

@@ -1,0 +1,22 @@
+diff --git a/lua/rustaceanvim/commands/debuggables.lua b/lua/rustaceanvim/commands/debuggables.lua
+index 4c1505b..d1e6864 100644
+--- a/lua/rustaceanvim/commands/debuggables.lua
++++ b/lua/rustaceanvim/commands/debuggables.lua
+@@ -18,7 +18,7 @@ local _dap_configuration_added = {}
+ ---@return string
+ local function build_label(args)
+   local ret = ''
+-  for _, value in ipairs(args.cargoArgs) do
++  for _, value in ipairs(args.cargoArgs or {}) do
+     ret = ret .. value .. ' '
+   end
+ 
+@@ -56,7 +56,7 @@ end
+ ---@param args rustaceanvim.RARunnableArgs
+ ---@return boolean
+ local function is_valid_test(args)
+-  local is_not_cargo_check = args.cargoArgs[1] ~= 'check'
++  local is_not_cargo_check = args.cargoArgs ~= nil and args.cargoArgs[1] ~= 'check'
+   return is_not_cargo_check
+ end
+ 

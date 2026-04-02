@@ -8,7 +8,9 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.go" },
+  { import = "astrocommunity.fuzzy-finder.fzf-lua" },
+  { import = "astrocommunity.recipes.ai" },
+  { import = "astrocommunity.ai.avante-nvim" },
   "pabloariasal/webify.nvim",
   { "hrsh7th/vim-vsnip" },
-  -- import/override with your plugins folder
 }
